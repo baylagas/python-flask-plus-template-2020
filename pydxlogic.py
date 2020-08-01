@@ -1,4 +1,4 @@
-from databasex import DatabaseX
+from pydatabasex import DatabaseX
 
 
 class Logic:
