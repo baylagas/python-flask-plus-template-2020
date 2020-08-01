@@ -7,8 +7,8 @@ class DatabaseX:
         self.__user = "root"
         self.__passwd = "12345"
         self.__database = "cardexdb"
-        self.__connection = self.createConnection()
-        self.__cursor = self.createCursor()
+        self.__connection = self.__createConnection()
+        self.__cursor = self.__createCursor()
 
     def get_host(self):
         return self.__host
@@ -16,31 +16,31 @@ class DatabaseX:
     def get_user(self):
         return self.__user
 
-    def get_password(self):
+    def __get_password(self):
         return self.__passwd
 
     def get_database(self):
         return self.__database
 
-    def get_connection(self):
+    def __get_connection(self):
         return self.__connection
 
-    def get_cursor(self):
+    def __get_cursor(self):
         return self.__cursor
 
-    def createConnection(self):
+    def __createConnection(self):
         con = pymysql.connect(
             host=self.get_host(),
             user=self.get_user(),
-            passwd=self.get_password(),
+            passwd=self.__get_password(),
             database=self.get_database(),
             charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor,
         )
         return con
 
-    def createCursor(self):
-        con = self.get_connection()
+    def __createCursor(self):
+        con = self.__get_connection()
         cursor = None
         if con is not None:
             cursor = con.cursor()
@@ -49,7 +49,7 @@ class DatabaseX:
         return cursor
 
     def executeQuery(self, sql):
-        cursor = self.get_cursor()
+        cursor = self.__get_cursor()
         result = None
         if cursor is not None:
             cursor.execute(sql)
@@ -57,8 +57,8 @@ class DatabaseX:
         return result
 
     def executeNonQueryBool(self, sql):
-        cursor = self.get_cursor()
-        con = self.get_connection()
+        cursor = self.__get_cursor()
+        con = self.__get_connection()
         hasAffected = False
         if cursor is not None:
             cursor.execute(sql)
@@ -69,8 +69,8 @@ class DatabaseX:
         return hasAffected
 
     def executeNonQueryRows(self, sql):
-        cursor = self.get_cursor()
-        con = self.get_connection()
+        cursor = self.__get_cursor()
+        con = self.__get_connection()
         rows = 0
         if cursor is not None:
             cursor.execute(sql)
